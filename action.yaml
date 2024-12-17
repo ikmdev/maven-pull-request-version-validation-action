@@ -14,6 +14,7 @@ runs:
 
     - name: Extract Target Version
       id: get_target_version
+      shell: bash
       run: |
           echo "TARGET_POM_VERSION=$(./mvnw help:evaluate -Dexpression=project.version -q -DforceStdout)" >> $GITHUB_OUTPUT 
 
@@ -22,11 +23,13 @@ runs:
 
     - name: Extract Source Version
       id: get_source_version
+      shell: bash
       run: |
           echo "SOURCE_POM_VERSION=$(./mvnw help:evaluate -Dexpression=project.version -q -DforceStdout)" >> $GITHUB_OUTPUT 
      
     - name: Validate Version
       if: steps.get_target_version.outputs.TARGET_POM_VERSION != steps.get_target_version.outputs.SOURCE_POM_VERSION
+      shell: bash
       run: |
          echo "::error::Source Version & Target Version Does Not Match"
          echo "::error::Source Version: ${{steps.get_source_version.outputs.SOURCE_POM_VERSION}}"
