@@ -35,7 +35,7 @@ runs:
       id: get_target_version
       shell: bash
       run: |
-          echo "TARGET_POM_VERSION=$(./mvnw help:evaluate -Dexpression=project.version -q -DforceStdout)" >> $GITHUB_OUTPUT 
+          echo "TARGET_POM_VERSION=${$(./mvnw help:evaluate -Dexpression=project.version -q -DforceStdout)##*([[:space:]])}" >> $GITHUB_OUTPUT 
 
     - name: Checkout Repository
       uses: actions/checkout@v4
@@ -44,7 +44,7 @@ runs:
       id: get_source_version
       shell: bash
       run: |
-          echo "SOURCE_POM_VERSION=$(./mvnw help:evaluate -Dexpression=project.version -q -DforceStdout)" >> $GITHUB_OUTPUT 
+          echo "SOURCE_POM_VERSION=${$(./mvnw help:evaluate -Dexpression=project.version -q -DforceStdout)##*([[:space:]])}" >> $GITHUB_OUTPUT 
      
     - name: Validate Version
       if: steps.get_target_version.outputs.TARGET_POM_VERSION != steps.get_source_version.outputs.SOURCE_POM_VERSION
