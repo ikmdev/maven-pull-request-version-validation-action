@@ -7,7 +7,7 @@ inputs:
   java_version:
     description: "Java Version"
     required: false
-    default: "24"
+    default: "25"
        
 runs:
   using: "composite" 
